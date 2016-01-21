@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 
 describe('Smoke tests', function () {
 
-    it('can validate an object against a complicated schema', function () {
+    it('can validate complex objects', function () {
         var validate = is({
             a: is(Number, String),
             b: {
@@ -61,7 +61,7 @@ describe('Smoke tests', function () {
         })).to.be.false;
     });
     
-    it('can validate an array against a complex schema', function () {
+    it('can validate complex arrays', function () {
         var validate = is.ArrayOf({
             x: String,
             y: is.ArrayOf(Number),
