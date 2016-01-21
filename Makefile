@@ -6,7 +6,7 @@ ESLINT = ./node_modules/.bin/eslint
 src = lib/is.js
 test = $(wildcard test/*.spec.js)
 
-all: node_modules build/lint build/test build/coverage
+all: node_modules build/lint build/test
 
 clean:
 	rm -rfv build
