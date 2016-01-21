@@ -27,7 +27,7 @@ build/test: node_modules $(src) $(test)
 
 build/coverage: node_modules build/test $(src) $(test)
 	mkdir -p $@
-	$(ISTANBUL) cover --report html --dir $(dir $@)/coverage $(_MOCHA) -- -R nyan
+	$(ISTANBUL) cover --report html --dir $(dir $@)/coverage $(_MOCHA) -- -R dot
 	touch $@
 
 .PHONY: all clean
