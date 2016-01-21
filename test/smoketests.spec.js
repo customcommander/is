@@ -60,4 +60,22 @@ describe('Smoke tests', function () {
             ]
         })).to.be.false;
     });
+    
+    it('can validate an array against a complex schema', function () {
+        var validate = is.ArrayOf({
+            x: String,
+            y: is.ArrayOf(Number),
+            z: is.ObjectOf([String, String])
+        });
+
+        expect(validate([
+            {x: 'foo', y: [1, 2, 3], z: {a: ['x', 'y'], b: ['x', 'y']}},
+            {x: 'foo', y: [1, 2, 3], z: {a: ['x', 'y'], b: ['x', 'y']}}
+        ])).to.be.true;
+
+        expect(validate([
+            {x: 'foo', y: [1, 2, 3], z: {a: ['x', 'y'], b: ['x', 'y']}},
+            {x: 'foo', y: [1, 'Error!', 3], z: {a: ['x', 'y'], b: ['x', 'y']}}
+        ])).to.be.false;
+    });
 });
