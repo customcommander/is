@@ -6,22 +6,26 @@ ESLINT = ./node_modules/.bin/eslint
 src = lib/is.js
 test = $(wildcard test/*.spec.js)
 
-all: build/lint build/test build/coverage
+all: node_modules build/lint build/test build/coverage
 
 clean:
 	rm -rfv build
 
-build/lint: $(src) $(test) .eslintrc.json
+node_modules: package.json
+	npm install
+	touch $@
+
+build/lint: node_modules $(src) $(test) .eslintrc.json
 	mkdir -p $(dir $@)
 	$(ESLINT) $(filter %.js, $^)
 	touch $@
 
-build/test: $(src) $(test)
+build/test: node_modules $(src) $(test)
 	mkdir -p $(dir $@)
 	$(MOCHA)
 	touch $@
 
-build/coverage: build/test $(src) $(test)
+build/coverage: node_modules build/test $(src) $(test)
 	mkdir -p $@
 	$(ISTANBUL) cover --report html --dir $(dir $@)/coverage $(_MOCHA) -- -R nyan
 	touch $@
