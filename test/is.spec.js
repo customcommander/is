@@ -203,6 +203,13 @@ describe('is', function () {
             expect(validate({})).to.be.true;
         });
 
+        it('returns false if the function returns a falsy value for the thing', function () {
+            var validate = is(function () {
+                return '';
+            });
+            expect(validate('')).to.be.false;
+        });
+
         it('returns false if the function returns a truthy value for the thing', function () {
             var validate = is(function () {
                 return 1;
