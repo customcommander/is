@@ -2,7 +2,7 @@
   "name": "is",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/is.js",
   "scripts": {
     "test": "make build/test"
   },
@@ -10,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/customcommander/is.git"
   },
-  "author": "customcommander",
+  "author": {
+    "name": "customcommander",
+    "url": "https://github.com/customcommander"
+  },
+  "contributors": [
+    {"name": "charliehw", "url": "https://github.com/charliehw"}
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/customcommander/is/issues"
