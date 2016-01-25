@@ -1,0 +1,6 @@
+build/
+test/
+.eslintrc.json
+.npmignore
+.travis.yml
+Makefile
