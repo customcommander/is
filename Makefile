@@ -1,33 +1,43 @@
-_MOCHA = ./node_modules/.bin/_mocha
-MOCHA = ./node_modules/.bin/mocha
-ISTANBUL = ./node_modules/.bin/istanbul
-ESLINT = ./node_modules/.bin/eslint
+eslint = ./node_modules/.bin/eslint
+nyc = ./node_modules/.bin/nyc
+ava = ./node_modules/.bin/ava
 
-src = lib/is.js
-test = $(wildcard test/*.spec.js)
+lib_files = $(wildcard lib/*.js)
+test_files = $(wildcard test/*.js)
 
-all: node_modules build/lint build/test
+all: lint test
+test: node_modules build/test
+lint: node_modules build/lint
+
+dist: test
+	cp -v lib/*.js $@/
+	touch $@
 
 clean:
+	$(info run `SUPERCLEAN=1 make clean` to delete node modules as well)
 	rm -rfv build
+	rm -rfv coverage
+	rm -rfv .nyc_output
+ifdef SUPERCLEAN
+	rm -rfv node_modules
+endif
+
+###############################################################################
+### PRIVATE TARGETS ###########################################################
+###############################################################################
 
 node_modules: package.json
 	npm install
 	touch $@
 
-build/lint: node_modules $(src) $(test) .eslintrc.json
+build/lint: $(lib_files) $(test_files) .eslintrc.json
 	mkdir -p $(dir $@)
-	$(ESLINT) $(filter %.js, $^)
+	$(eslint) ./
 	touch $@
 
-build/test: node_modules $(src) $(test)
+build/test: $(lib_files) $(test_files)
 	mkdir -p $(dir $@)
-	$(MOCHA)
+	$(nyc) --reporter=html --reporter=text $(ava) --verbose
 	touch $@
 
-build/coverage: node_modules build/test $(src) $(test)
-	mkdir -p $@
-	$(ISTANBUL) cover --report html --dir $(dir $@)/coverage $(_MOCHA) -- -R dot
-	touch $@
-
-.PHONY: all clean
+.PHONY: all clean test dist

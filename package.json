@@ -1,10 +1,13 @@
 {
-  "name": "is",
+  "name": "@customcommander/is",
   "version": "1.0.0",
-  "description": "",
-  "main": "lib/is.js",
+  "description": "Underengineered Validation Library",
+  "main": "dist/is.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "make build/test"
+    "test": "make"
   },
   "repository": {
     "type": "git",
@@ -15,7 +18,10 @@
     "url": "https://github.com/customcommander"
   },
   "contributors": [
-    {"name": "charliehw", "url": "https://github.com/charliehw"}
+    {
+      "name": "charliehw",
+      "url": "https://github.com/charliehw"
+    }
   ],
   "license": "MIT",
   "bugs": {
@@ -23,10 +29,12 @@
   },
   "homepage": "https://github.com/customcommander/is#readme",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "eslint": "^1.10.3",
-    "istanbul": "^0.4.2",
-    "mocha": "^2.3.4",
+    "ava": "^0.18.1",
+    "eslint": "^3.15.0",
+    "nyc": "^10.1.2",
     "sinon": "^1.17.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
