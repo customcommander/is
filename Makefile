@@ -6,10 +6,10 @@ lib_files = $(wildcard lib/*.js)
 test_files = $(wildcard test/*.js)
 
 all: lint test
-test: node_modules build/test
 lint: node_modules build/lint
+test: node_modules build/test
 
-dist: test
+dist: lint test
 	cp -v lib/*.js $@/
 	touch $@
 
