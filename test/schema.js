@@ -1,4 +1,4 @@
-const sinon = require('sinon');
+const td = require('testdouble');
 const test = require('ava');
 const is = require('../lib/is');
 
@@ -108,30 +108,24 @@ test('schema <function> (should not return truthy)', macro, [truthy,
 ]);
 
 test('schema <function> (receives the value as its first parameter)', t => {
-    let stub = sinon.stub().returns(true);
     let validate;
+    let stub;
+
+    stub = td.function();
+    td.when(stub('a')).thenReturn(true);
+    td.when(stub('b')).thenReturn(true);
+    td.when(stub('c')).thenReturn(true);
+    td.when(stub('d')).thenReturn(true);
+    td.when(stub('e')).thenReturn(true);
 
     validate = is(stub);
-    validate('foo');
-    t.true(stub.calledOnce);
-    t.true(stub.calledWithExactly('foo'));
-
-    stub.reset();
+    t.true(validate('a'));
 
     validate = is.ArrayOf(stub);
-    validate(['foo', 'bar']);
-    t.true(stub.calledTwice);
-    t.true(stub.calledWithExactly('foo'));
-    t.true(stub.calledWithExactly('bar'));
-
-    stub.reset();
+    t.true(validate(['b', 'c']));
 
     validate = is.ObjectOf(stub);
-    validate({x: 'foo', y: 'bar', z: 'baz'});
-    t.true(stub.calledThrice);
-    t.true(stub.calledWithExactly('foo'));
-    t.true(stub.calledWithExactly('bar'));
-    t.true(stub.calledWithExactly('baz'));
+    t.true(validate({x: 'd', y: 'e'}));
 });
 
 
